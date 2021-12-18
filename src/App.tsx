@@ -1,15 +1,30 @@
+import DraggableCard from 'components/draggableCard';
+import { Todo } from 'interface/todo';
 import React from 'react';
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import './App.css';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useRecoilState } from 'recoil';
+import { todoState } from 'shared/appStore';
 import tw from 'twin.macro';
-import { MenuIcon } from '@heroicons/react/solid';
+import './App.css';
 
 const CardWrapper = tw.ul`flex flex-col p-2 bg-gray-200 rounded gap-2`;
 
-const Card = tw.li`flex justify-between w-40 px-4 py-2 bg-white text-black`;
-
 function App() {
-  const onDragEnd = () => {};
+  const [todos, setTodos] = useRecoilState(todoState);
+
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    destination &&
+      setTodos((prevState) => {
+        const copy = [...prevState];
+        copy.splice(source.index, 1);
+        copy.splice(
+          destination?.index,
+          0,
+          prevState.find((todo) => todo.name === draggableId) ?? ({} as Todo),
+        );
+        return copy;
+      });
+  };
   return (
     <div className="w-full flex flex-1 bg-blue-400 dark:bg-indigo-900">
       <DragDropContext onDragEnd={onDragEnd}>
@@ -20,32 +35,9 @@ function App() {
                 ref={droppableProvide.innerRef}
                 {...droppableProvide.droppableProps}
               >
-                <Draggable draggableId="first" index={0}>
-                  {(draggableProvide) => (
-                    <Card
-                      ref={draggableProvide.innerRef}
-                      {...draggableProvide.draggableProps}
-                    >
-                      one{' '}
-                      <span {...draggableProvide.dragHandleProps}>
-                        <MenuIcon className="w-6 h-6" />
-                      </span>
-                    </Card>
-                  )}
-                </Draggable>
-                <Draggable draggableId="second" index={1}>
-                  {(draggableProvide) => (
-                    <Card
-                      ref={draggableProvide.innerRef}
-                      {...draggableProvide.draggableProps}
-                    >
-                      two{' '}
-                      <span {...draggableProvide.dragHandleProps}>
-                        <MenuIcon className="w-6 h-6" />
-                      </span>
-                    </Card>
-                  )}
-                </Draggable>
+                {todos.map((todo, idx) => (
+                  <DraggableCard key={idx} {...todo} idx={idx} />
+                ))}
                 {droppableProvide.placeholder}
               </CardWrapper>
             )}
