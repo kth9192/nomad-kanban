@@ -45,6 +45,7 @@ function Board({ toDos, boardId }: BoardProps) {
       <Form onSubmit={handleSubmit(handleForm)}>
         <input
           type="text"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder={`add task on ${boardId}`}
           {...register('todo', { required: true })}
         />
@@ -75,6 +76,6 @@ const BoardTitle = tw.h2`text-center font-bold capitalize mb-2 `;
 
 const BoardWrapper = tw.div`flex flex-col w-full bg-gray-100 rounded py-2 gap-2`;
 
-const Form = tw.form`w-full flex justify-center`;
+const Form = tw.form`w-full flex justify-center px-2`;
 
 export default Board;
