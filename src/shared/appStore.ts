@@ -1,12 +1,15 @@
-import { atom, selector } from 'recoil';
+import { Todo } from 'interface/todo';
+import { atom } from 'recoil';
 
-export const todoState = atom({
-  key: 'minute',
-  default: [
-    { id: 0, name: 'a' },
-    { id: 1, name: 'b' },
-    { id: 2, name: 'c' },
-    { id: 3, name: 'd' },
-    { id: 4, name: 'e' },
-  ],
+interface TodoState {
+  [key: string]: Todo[];
+}
+
+export const todoState = atom<TodoState>({
+  key: 'todo',
+  default: {
+    'to do': [],
+    doing: [],
+    done: [],
+  },
 });

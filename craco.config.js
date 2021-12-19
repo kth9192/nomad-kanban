@@ -1,5 +1,5 @@
 module.exports = {
-  // babel: {
-  // presets: ['@emotion/babel-preset-css-prop'],
-  // },
+  twin: {
+    preset: 'styled-components',
+  },
 };

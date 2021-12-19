@@ -17,6 +17,7 @@
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.22.2",
     "react-router": "^6.1.1",
     "react-scripts": "5.0.0",
     "recoil": "^0.5.2",
@@ -52,15 +53,7 @@
   },
   "babelMacros": {
     "twin": {
-      "preset": "styled-components",
-      "styled": {
-        "import": "default",
-        "from": "styled-components"
-      },
-      "css": {
-        "import": "css",
-        "from": "styled-components"
-      }
+      "preset": "styled-components"
     }
   },
   "devDependencies": {

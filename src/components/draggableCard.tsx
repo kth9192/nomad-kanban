@@ -8,17 +8,20 @@ interface DraggableCardProps extends Todo {
   idx: number;
 }
 
-const Card = tw.li`flex justify-between w-40 px-4 py-2 bg-white text-black`;
+const Card = tw.li`flex justify-between w-40 px-4 py-2  text-black`;
 
-function DraggableCard({ id, name, idx }: DraggableCardProps) {
+function DraggableCard({ id, content, idx }: DraggableCardProps) {
   return (
-    <Draggable key={id} draggableId={name} index={idx}>
-      {(draggableProvide) => (
+    <Draggable key={id} draggableId={id} index={idx}>
+      {(draggableProvide, snapshot) => (
         <Card
+          className={`${
+            snapshot.isDragging ? 'bg-indigo-300 shadow-lg' : 'bg-white'
+          }`}
           ref={draggableProvide.innerRef}
           {...draggableProvide.draggableProps}
         >
-          {name}
+          {content}
           <span {...draggableProvide.dragHandleProps}>
             <MenuIcon className="w-6 h-6" />
           </span>
